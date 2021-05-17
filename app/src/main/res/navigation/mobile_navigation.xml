@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.hackcit20.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_productDetatil"
+            app:destination="@id/productDetatil" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_Trending"
+        android:name="com.example.hackcit20.ui.Trending.TrendingFragment"
+        android:label="@string/title_trending"
+        tools:layout="@layout/fragment_trending" >
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_library"
+        android:name="com.example.hackcit20.ui.Library.LibraryFragment"
+        android:label="@string/title_library"
+        tools:layout="@layout/fragment_library" >
+        <action
+            android:id="@+id/action_navigation_library_to_downloads"
+            app:destination="@id/downloads" />
+        <action
+            android:id="@+id/action_navigation_library_to_watchList"
+            app:destination="@id/watchList" />
+        <action
+            android:id="@+id/action_navigation_library_to_favourites"
+            app:destination="@id/favourites" />
+    </fragment>
+    <fragment
+        android:id="@+id/ProfileFragment"
+        android:name="com.example.hackcit20.ui.Profile.ProfileFragment"
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_ProfileFragment_to_notification"
+            app:destination="@id/notification" />
+        <action
+            android:id="@+id/action_ProfileFragment_to_cardDetails"
+            app:destination="@id/cardDetails" />
+        <action
+            android:id="@+id/action_ProfileFragment_to_settings"
+            app:destination="@id/settings" />
+    </fragment>
+    <fragment
+        android:id="@+id/productDetatil"
+        android:name="com.example.hackcit20.ui.ProductDetail.ProductDetatil"
+        android:label="product_detatil_fragment"
+        tools:layout="@layout/product_detatil_fragment" />
+    <fragment
+        android:id="@+id/notification"
+        android:name="com.example.hackcit20.SecondClassUi.notification"
+        android:label="fragment_notification"
+        tools:layout="@layout/fragment_notification" />
+    <fragment
+        android:id="@+id/cardDetails"
+        android:name="com.example.hackcit20.SecondClassUi.CardDetails"
+        android:label="fragment_card_details"
+        tools:layout="@layout/fragment_card_details" />
+    <fragment
+        android:id="@+id/settings"
+        android:name="com.example.hackcit20.SecondClassUi.Settings"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/downloads"
+        android:name="com.example.hackcit20.SecondClassUi.Downloads"
+        android:label="fragment_downloads"
+        tools:layout="@layout/fragment_downloads" />
+    <fragment
+        android:id="@+id/watchList"
+        android:name="com.example.hackcit20.SecondClassUi.WatchList"
+        android:label="fragment_watch_list"
+        tools:layout="@layout/fragment_watch_list" />
+    <fragment
+        android:id="@+id/favourites"
+        android:name="com.example.hackcit20.SecondClassUi.Favourites"
+        android:label="fragment_favourites"
+        tools:layout="@layout/fragment_favourites" />
+
+
+</navigation>
