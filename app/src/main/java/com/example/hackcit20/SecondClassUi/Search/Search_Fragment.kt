@@ -5,10 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -36,40 +36,45 @@ class Search_Fragment : Fragment(), SearchView.OnQueryTextListener {
         toolbar.inflateMenu(R.menu.trendingmenu)
         val searchView: SearchView = view.findViewById(R.id.search)
 
-        initRecylerView(view,list)
+        initRecylerView(view, list)
         searchView.setOnQueryTextListener(this)
         return view
     }
+
     private fun initRecylerView(view: View, category: List<ProductDetail>) {
         val recyclerView = view.findViewById<RecyclerView>(R.id.SearchFragmentRecylerView)
-        val staggeredGridLayoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
-        recyclerView.layoutManager = staggeredGridLayoutManager
+        // val staggeredGridLayoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+        recyclerView.layoutManager = LinearLayoutManager(activity)
         adapter = SearechAdapter(view.context, category)
         recyclerView.adapter = adapter
 
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        return true
+        TODO()
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        val query: Query = collectionReference.whereEqualTo("MovieName", newText)
-        try {
+        if (newText != "") {
+            val query: Query =
+                collectionReference.orderBy("MovieName").startAt(newText).endAt("$newText\uf8ff")
+                    .limit(10)
             query.get().addOnCompleteListener {
                 if (it.isSuccessful) {
+                    list.clear()
                     var i = 0
                     for (document in it.result!!) {
                         val temp: ProductDetail = document.toObject(ProductDetail::class.java)
                         list.add(i++, temp)
+                        Toast.makeText(context, "aqsdfghjszdfgh   $i $newText", Toast.LENGTH_LONG)
+                            .show()
+                        adapter.notifyDataSetChanged()
                     }
-                    adapter.notifyDataSetChanged()
-                } else {
+                    Toast.makeText(context, "$list", Toast.LENGTH_LONG).show()
+                } else if (it.isCanceled) {
                     Toast.makeText(context, "Failed", Toast.LENGTH_LONG).show()
                 }
             }
-        } catch (e: Exception) {
-
         }
         return true
     }

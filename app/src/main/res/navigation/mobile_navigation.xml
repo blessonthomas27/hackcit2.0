@@ -68,7 +68,11 @@
         android:id="@+id/search_Fragment"
         android:name="com.example.hackcit20.SecondClassUi.Search.Search_Fragment"
         android:label="fragment_search_"
-        tools:layout="@layout/fragment_search_" />
+        tools:layout="@layout/fragment_search_" >
+        <action
+            android:id="@+id/action_search_Fragment_to_productDetatil"
+            app:destination="@id/productDetatil" />
+    </fragment>
 
 
 </navigation>
