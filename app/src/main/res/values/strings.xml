@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HackCit2.0</string>
+    <string name="app_name">Ott++</string>
     <string name="title_activity_main2">MainActivity</string>
     <string name="title_home">Home</string>
     <string name="title_trending">Trending</string>
@@ -9,4 +9,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="api_key">AIzaSyDX9E43hGmQTi6fl0DM5aTzTCq87N0492g</string>
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

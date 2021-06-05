@@ -7,29 +7,42 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.example.hackcit20.R
-import com.example.hackcit20.dataclass.Item
+import com.example.hackcit20.dataclass.ProductDetail
+
 
 class HorizontelAdapter(
-    val context: Context, val userlist: List<Item>,
+    val context: Context, val productDetail: List<ProductDetail>,
     var clicklistner: HorizontelAdapter.OnHorzonatalClick
 ) :
     RecyclerView.Adapter<HorizontelAdapter.ViewHolder>() {
    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val MovieName: TextView
         var MovieImage: ImageView
+       val options: RequestOptions = RequestOptions()
+           .centerCrop()
+           .placeholder(R.drawable.blackimage)
+           .error(R.drawable.blackimage)
+           .diskCacheStrategy(DiskCacheStrategy.ALL)
+           .priority(Priority.HIGH)
+           .dontAnimate()
+           .dontTransform()
         init {
             MovieName = itemView.findViewById(R.id.Item_Name)
             MovieImage=itemView.findViewById(R.id.Item_Image)
         }
         fun bind(position: Int,action: OnHorzonatalClick) {
-            MovieName.text=userlist[position].ItemName
-            MovieImage.setImageResource(userlist[position].ItemImage)
+            Glide.with(context).load(productDetail[position].ImageProfile)
+                .apply(options)
+                .into(MovieImage)
             itemView.setOnClickListener {
-                action.onItemclickk(userlist,position)
+                action.onItemclickk(productDetail,position)
             }
         }
-
 
     }
     override fun onCreateViewHolder(
@@ -42,7 +55,7 @@ class HorizontelAdapter(
     }
 
     override fun getItemCount(): Int {
-        return userlist.size
+        return productDetail.size
     }
 
     override fun onBindViewHolder(holder: HorizontelAdapter.ViewHolder, position: Int) {
@@ -50,7 +63,7 @@ class HorizontelAdapter(
     }
 
     interface OnHorzonatalClick{
-        fun onItemclickk(userlist: List<Item>, position: Int){}
+        fun onItemclickk(productDetail: List<ProductDetail>, position: Int){}
     }
 
 

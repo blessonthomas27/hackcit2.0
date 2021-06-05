@@ -2,7 +2,7 @@
     android:width="512dp"
     android:height="512dp"
     android:viewportWidth="512.0003"
-
+    android:fillColor="@color/white"
     android:viewportHeight="512">
   <path
       android:fillColor="@color/white"

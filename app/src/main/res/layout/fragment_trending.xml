@@ -15,10 +15,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Hackcit 2.0"
-        android:background="@color/purple_500"
+        app:title="Trending"
+        android:background="@color/black"
         app:titleTextColor="@color/white"
         tools:ignore="MissingConstraints"/>
+
+    <ProgressBar
+        android:id="@+id/progresbarloding"
+        android:layout_width="48dp"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent=".05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TrendingFragmentToolbar"
+        app:layout_constraintWidth_percent=".05" />
 
     <androidx.recyclerview.widget.RecyclerView
         app:layout_constraintTop_toBottomOf="@+id/TrendingFragmentToolbar"
@@ -30,7 +40,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:paddingBottom="70dp"
         app:layout_constraintWidth_percent="1"/>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

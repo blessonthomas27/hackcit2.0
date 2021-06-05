@@ -14,13 +14,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Notification"
+        app:title="Purchased"
         android:background="@color/purple_500"
         app:titleTextColor="@color/white"
         tools:ignore="MissingConstraints"/>
     <androidx.recyclerview.widget.RecyclerView
         app:layout_constraintTop_toBottomOf="@+id/NotificationFragmentToolBar"
-        android:id="@+id/NotificationRecycler"
+        android:id="@+id/CartRecycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintHeight_percent=".92"

@@ -10,7 +10,7 @@
         android:id="@+id/ProducDetailFragmentToolbar"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/purple_500"
+        android:background="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent=".08"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,11 +21,10 @@
         tools:ignore="MissingConstraints" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/ImageBanner"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="fitXY"
-        android:src="@drawable/spidermanhomecoming"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent=".3"
         app:layout_constraintHorizontal_bias="0.0"
@@ -34,15 +33,14 @@
         app:layout_constraintWidth_percent="1" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/ImageProfile"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="fitXY"
-        android:src="@drawable/spiderman"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+        app:layout_constraintBottom_toBottomOf="@+id/ImageBanner"
         app:layout_constraintHeight_percent=".2"
         app:layout_constraintStart_toStartOf="@id/guideline14"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4"
+        app:layout_constraintTop_toBottomOf="@+id/ImageBanner"
         app:layout_constraintWidth_percent=".3" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -66,6 +64,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent=".37" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline18"
         android:layout_width="wrap_content"
@@ -81,11 +80,12 @@
         app:layout_constraintGuide_begin="377dp" />
 
     <TextView
+        android:id="@+id/MovieName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:maxLines="3"
-        android:text="SpiderMan Home Coming | Tom Holland"
         android:maxLength="60"
+        android:maxLines="3"
+        android:textColor="@color/white"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline19"
@@ -96,17 +96,17 @@
 
 
     <TextView
-        android:id="@+id/MovieDescprition"
+        android:id="@+id/MovieDescription"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:gravity="center_horizontal|center_vertical"
         android:maxLength="1000"
         android:maxLines="3"
-        android:gravity="center_horizontal|center_vertical"
-        android:text="A young Peter Parker/Spider-Man begins to navigate his newfound identity as the web-slinging super hero Spider-Man. Thrilled by his experience with the Avengers, Peter returns home, where he lives with his Aunt May, under the watchful eye of his new mentor Tony Stark. Peter tries to fall back into his normal daily routine - distracted by thoughts of proving himself to be more than just your friendly neighborhood Spider-Man - but when the Vulture emerges as a new villain, everything that Peter holds most important will be threatened."
-        android:textSize="10sp"
         android:paddingTop="5dp"
-        android:textAlignment="center"
         android:paddingBottom="5dp"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="10sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline17"
         app:layout_constraintEnd_toEndOf="@+id/guideline15"
@@ -122,9 +122,9 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout1"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:id="@+id/constraintLayout1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent=".08"
         app:layout_constraintStart_toStartOf="parent"
@@ -151,7 +151,20 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginEnd="5dp"
-            android:text="₹750/- Buy"
+            android:text="Buy"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toStartOf="@+id/guideline25"
+            app:layout_constraintHeight_percent="1"
+            app:layout_constraintStart_toEndOf="@+id/guideline24"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/stream_now"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            android:layout_marginEnd="5dp"
+            android:text="Stream Now"
             android:textAllCaps="false"
             app:layout_constraintEnd_toStartOf="@+id/guideline25"
             app:layout_constraintHeight_percent="1"
@@ -173,6 +186,21 @@
             android:layout_marginStart="5dp"
             android:text="Cart"
             android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/guideline35"
+            app:layout_constraintHeight_percent="1"
+            app:layout_constraintStart_toEndOf="@+id/guideline25"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/Download"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="5dp"
+            android:text="Download"
+            android:textAllCaps="false"
+            android:visibility="gone"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toStartOf="@+id/guideline35"
             app:layout_constraintHeight_percent="1"
             app:layout_constraintStart_toEndOf="@+id/guideline25"
@@ -182,21 +210,146 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent=".2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout1"
-        app:layout_constraintWidth_percent="1" >
+        app:layout_constraintWidth_percent="1">
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewpager"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:foregroundGravity="center_vertical"
-            android:layout_marginTop="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:weightSum="3">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/review"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="20sp">
+
+                        </TextView>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Reviews"
+                            android:textColor="@color/white"
+                            android:textSize="14sp">
+
+                        </TextView>
+
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="#BBBBEA" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/grade"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="20sp">
+
+                        </TextView>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ratings"
+                            android:textColor="@color/white"
+                            android:textSize="14sp">
+
+                        </TextView>
+
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="#BBBBEA" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/duration"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Duration"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="!Comments are Temporarly Disabled"
+                        android:textSize="30sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

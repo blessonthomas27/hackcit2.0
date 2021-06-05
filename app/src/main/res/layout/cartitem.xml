@@ -1,0 +1,82 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="200dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/productimgsmall"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_percent=".7"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent=".3" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:maxLength="100"
+            android:maxLines="3"
+            android:paddingStart="10dp"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline26"
+            app:layout_constraintEnd_toStartOf="@+id/guideline23"
+            app:layout_constraintHeight_percent=".5"
+            app:layout_constraintStart_toEndOf="@+id/productimgsmall"
+            app:layout_constraintTop_toTopOf="@+id/productimgsmall"
+            app:layout_constraintWidth_percent=".6" />
+
+        <Button
+            android:id="@+id/BuyNow"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="Buy"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="@+id/productimgsmall"
+            app:layout_constraintHeight_percent=".25"
+            app:layout_constraintStart_toEndOf="@+id/productimgsmall"
+            app:layout_constraintTop_toTopOf="@+id/guideline26"
+            app:layout_constraintWidth_percent=".3" />
+
+        <Button
+            android:id="@+id/removenow"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="19dp"
+            android:text="remove"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+
+            app:layout_constraintBottom_toBottomOf="@+id/BuyNow"
+            app:layout_constraintEnd_toStartOf="@+id/guideline23"
+            app:layout_constraintHeight_percent=".25"
+            app:layout_constraintStart_toEndOf="@+id/BuyNow"
+            app:layout_constraintTop_toTopOf="@+id/guideline26"
+            app:layout_constraintWidth_percent=".3" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline23"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".95" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline26"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".6" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

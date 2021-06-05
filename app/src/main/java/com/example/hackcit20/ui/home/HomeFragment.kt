@@ -1,32 +1,31 @@
 package com.example.hackcit20.ui.home
 
-import android.content.Context
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.*
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hackcit20.Adapter.HorizontelAdapter
 import com.example.hackcit20.Adapter.MainRecylerAdapter
 import com.example.hackcit20.R
 import com.example.hackcit20.dataclass.Category
-import com.example.hackcit20.dataclass.Item
+import com.example.hackcit20.dataclass.ProductDetail
 import com.example.hackcit20.dataclass.ViewType
 
-class HomeFragment : Fragment(),HorizontelAdapter.OnHorzonatalClick {
+class
+HomeFragment : Fragment(), HorizontelAdapter.OnHorzonatalClick {
 
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var adapter: MainRecylerAdapter
     var ImageUrl = arrayListOf<String>()
-
-
+    lateinit var pd: ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,49 +35,65 @@ class HomeFragment : Fragment(),HorizontelAdapter.OnHorzonatalClick {
         homeViewModel =
             ViewModelProvider(this).get(HomeViewModel::class.java)
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-        var toolbar: Toolbar =view.findViewById(R.id.HomeFragmentToolbar)
+        val toolbar: Toolbar = view.findViewById(R.id.HomeFragmentToolbar)
+        pd = view.findViewById(R.id.progresbarloding)
+        pd.visibility = View.VISIBLE
+        val Animate = mutableListOf<ProductDetail>()
+        val Tamil = mutableListOf<ProductDetail>()
+        val hollywood = mutableListOf<ProductDetail>()
+        val bollywood = mutableListOf<ProductDetail>()
+        val obj = mutableListOf(
+            ViewType(1, ImageUrl, "image slidingview"),
+            ViewType(0, Category("Animation", "more", Animate), "", ""),
+            ViewType(0, Category("Hollywood", "more", hollywood), "", ""),
+            ViewType(0, Category("Bollywood", "more", bollywood), "", ""),
+            ViewType(0, Category("Tamil", "more", Tamil), "", "")
+        )
+
+        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
+        homeViewModel.live_obj_Animate.observe(viewLifecycleOwner, Observer { live_obj ->
+            Animate.clear()
+            Animate.addAll(live_obj)
+            initRecylerView(view, obj)
+        })
+        homeViewModel.live_obj_Tamil.observe(viewLifecycleOwner, Observer { live_obj ->
+            Tamil.clear()
+            Tamil.addAll(live_obj)
+            initRecylerView(view, obj)
+        })
+        homeViewModel.live_obj_Bollywood.observe(viewLifecycleOwner, Observer { live_obj ->
+            bollywood.clear()
+            bollywood.addAll(live_obj)
+            initRecylerView(view, obj)
+        })
+        homeViewModel.live_obj_Hollywood.observe(viewLifecycleOwner, Observer { live_obj ->
+            hollywood.clear()
+            hollywood.addAll(live_obj)
+            initRecylerView(view, obj)
+        })
 
         toolbar.inflateMenu(R.menu.homemenu)
         toolbar.setOnMenuItemClickListener {
-            if(it.itemId==R.id.searchitem){
-                Toast.makeText(context,"clicked ",Toast.LENGTH_LONG).show()
+            if (it.itemId == R.id.searchitem) {
+                Toast.makeText(context, "search is temporarly disabled!!", Toast.LENGTH_LONG).show()
             }
             true
         }
         ImageUrl.clear()
         ImageUrl()
-            var datalist1 = mutableListOf(
-                Item("aaa", R.drawable.ic_launcher_background),
-                Item("", R.drawable.imaddges),
-                Item("", R.drawable.imagesss),
-                Item("", R.drawable.spiderman),
-                Item("", R.drawable.gaurdiunglxy),
-                Item("", R.drawable.images),
-                Item("", R.drawable.aaaaaaaaa),
-                Item("", R.drawable.ic_launcher_background),
-                Item("", R.drawable.ic_launcher_background),
-                Item("", R.drawable.ic_launcher_background)
-            )
 
-            val obj = mutableListOf(
-                ViewType(1, ImageUrl, "image slidingview"),
-                ViewType(0,Category("Trop Grossing", "more", datalist1),"",""),
-                ViewType(0,Category("Hollywood", "more", datalist1),"",""),
-                ViewType(0,Category("Tamil", "more", datalist1),"",""),
-                ViewType(0,Category("Bollywood", "more", datalist1),"",""),
-                ViewType(0,Category("South Special", "more", datalist1),"","")
-            )
-
-
-        initRecylerView(view,obj)
         return view
     }
-    private fun initRecylerView(view: View,category: List<ViewType>){
-        val recyclerView=view.findViewById<RecyclerView>(R.id.HomeFragmentRecylerView)
-        recyclerView.layoutManager=LinearLayoutManager(activity)
-        adapter=MainRecylerAdapter(view.context,category)
-        recyclerView.adapter=adapter
+
+    private fun initRecylerView(view: View, category: List<ViewType>) {
+        pd.visibility = View.GONE
+        val recyclerView = view.findViewById<RecyclerView>(R.id.HomeFragmentRecylerView)
+        recyclerView.layoutManager = LinearLayoutManager(activity)
+        adapter = MainRecylerAdapter(view.context, category)
+        recyclerView.adapter = adapter
+        adapter.notifyDataSetChanged()
     }
+
     fun ImageUrl() {
         ImageUrl.add("https://wegotthiscovered.com/wp-content/uploads/2019/09/EFLLX8_U0AAjdOj-564x321.jpg")
         ImageUrl.add("https://wallpaperaccess.com/full/13453.jpg")

@@ -14,7 +14,6 @@
     <ImageView
         android:id="@+id/Item_Image"
         android:layout_width="match_parent"
-
         android:layout_height="match_parent"
         android:background="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -29,7 +28,6 @@
         android:id="@+id/Item_Name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Name"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
