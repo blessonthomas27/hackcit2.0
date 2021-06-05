@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hackcit20.Adapter.HorizontelAdapter
@@ -19,7 +20,7 @@ import com.example.hackcit20.dataclass.ProductDetail
 import com.example.hackcit20.dataclass.ViewType
 
 class
-HomeFragment : Fragment(), HorizontelAdapter.OnHorzonatalClick {
+HomeFragment : Fragment() {
 
 
     private lateinit var homeViewModel: HomeViewModel
@@ -75,7 +76,8 @@ HomeFragment : Fragment(), HorizontelAdapter.OnHorzonatalClick {
         toolbar.inflateMenu(R.menu.homemenu)
         toolbar.setOnMenuItemClickListener {
             if (it.itemId == R.id.searchitem) {
-                Toast.makeText(context, "search is temporarly disabled!!", Toast.LENGTH_LONG).show()
+                Navigation.findNavController(view)
+                    .navigate(R.id.action_navigation_home_to_search_Fragment)
             }
             true
         }

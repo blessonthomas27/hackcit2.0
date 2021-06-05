@@ -47,7 +47,6 @@ class Purchase : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(activity)
         adapter = PurchaseAdapter(view.context, category)
         recyclerView.adapter = adapter
-        adapter.notifyDataSetChanged()
     }
 
 }

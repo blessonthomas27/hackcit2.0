@@ -5,12 +5,14 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hackcit20.R
+import com.example.hackcit20.dataclass.ProductDetail
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -29,6 +31,9 @@ class LoginActivity : AppCompatActivity() {
     lateinit var review: EditText
     lateinit var grade: EditText
     lateinit var duration: EditText
+    var data = mutableListOf<ProductDetail>()
+    var i = 0
+    private val TAG = "Done"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,13 +65,66 @@ class LoginActivity : AppCompatActivity() {
         }
 
 
+
+
     }
 
 
-    private fun databasegetter(){
+    private fun databasegetter() {
+        db.collection("ProductImage").document("Animated").collection("list")
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    val temp: ProductDetail = document.toObject(ProductDetail::class.java)
+                    data.add(i++, temp)
+                }
+                db.collection("ProductImage").document("Hollywood").collection("list")
+                    .get()
+                    .addOnSuccessListener { documents1 ->
+                        for (document in documents1) {
+                            val temp: ProductDetail = document.toObject(ProductDetail::class.java)
+                            data.add(i++, temp)
+                        }
+                        db.collection("ProductImage").document("Bollywood").collection("list")
+                            .get()
+                            .addOnSuccessListener { documents2 ->
+                                for (document in documents2) {
+                                    val temp: ProductDetail =
+                                        document.toObject(ProductDetail::class.java)
+                                    data.add(i++, temp)
+                                }
+                                db.collection("ProductImage").document("Tamil").collection("list")
+                                    .get()
+                                    .addOnSuccessListener { documents3 ->
+                                        for (document in documents3) {
+                                            val temp: ProductDetail =
+                                                document.toObject(ProductDetail::class.java)
+                                            data.add(i++, temp)
+                                        }
+                                    }
+                            }
+                    }
+            }
+
 
     }
 
+    private fun ProductDatabase() {
+        for (k in 0..data.size-1) {
+            val user = hashMapOf(
+                "MovieName" to data[k].MovieName,
+                "MovieDescription" to data[k].MovieDescription,
+                "Price" to data[k].Price,
+                "review" to data[k].review,
+                "grade" to "PG",
+                "duration" to data[k].duration,
+                "ImageProfile" to data[k].ImageProfile,
+                "ImageBanner" to data[k].ImageBanner
+            )
+            db.collection("Products").document().set(user)
+        }
+
+    }
 
     private fun filechooser() {
         val i = Intent()
@@ -111,7 +169,7 @@ class LoginActivity : AppCompatActivity() {
                 val refbig = storageRef.child("images/big/" + moviename.text + ".jpg")
                 refbig.putFile(filepathbig).addOnSuccessListener {
                     refbig.downloadUrl.addOnSuccessListener {
-                        aa(it.toString(),refsmall)
+                        aa(it.toString(), refsmall)
                     }
                     Toast.makeText(this, "Sucessfully added big", Toast.LENGTH_SHORT).show()
                 }.addOnFailureListener {
@@ -127,17 +185,19 @@ class LoginActivity : AppCompatActivity() {
 
     fun aa(bigimgg: String, refsmall: StorageReference) {
         refsmall.downloadUrl.addOnSuccessListener {
-            aaa(bigimgg,it.toString())
+            aaa(bigimgg, it.toString())
         }
     }
-    private fun clear(){
-        moviename.text=null
-        moviedescription.text=null
-        price.text=null
-        review.text=null
-        grade.text=null
-        duration.text=null
+
+    private fun clear() {
+        moviename.text = null
+        moviedescription.text = null
+        price.text = null
+        review.text = null
+        grade.text = null
+        duration.text = null
     }
+
     private fun aaa(bigimgg: String, smll: String) {
 
         val user = hashMapOf(
@@ -151,7 +211,8 @@ class LoginActivity : AppCompatActivity() {
             "ImageBanner" to bigimgg
         )
         try {
-            db.collection("ProductImage").document("Top Grossing").collection("list").document().set(user).addOnSuccessListener {
+            db.collection("ProductImage").document("Top Grossing").collection("list").document()
+                .set(user).addOnSuccessListener {
                 clear()
             }
         } catch (e: Exception) {
