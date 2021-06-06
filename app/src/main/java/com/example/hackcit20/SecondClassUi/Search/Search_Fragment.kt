@@ -43,8 +43,8 @@ class Search_Fragment : Fragment(), SearchView.OnQueryTextListener {
 
     private fun initRecylerView(view: View, category: List<ProductDetail>) {
         val recyclerView = view.findViewById<RecyclerView>(R.id.SearchFragmentRecylerView)
-        // val staggeredGridLayoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
-        recyclerView.layoutManager = LinearLayoutManager(activity)
+         val staggeredGridLayoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+        recyclerView.layoutManager = staggeredGridLayoutManager
         adapter = SearechAdapter(view.context, category)
         recyclerView.adapter = adapter
 

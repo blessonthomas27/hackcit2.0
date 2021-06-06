@@ -42,7 +42,6 @@ class ProductDetatil : Fragment(), View.OnClickListener {
         .priority(Priority.HIGH)
         .dontAnimate()
         .dontTransform()
-    var backpress = false
     var db = FirebaseFirestore.getInstance()
     val mAuth = FirebaseAuth.getInstance()
     val currentuser = mAuth.currentUser
@@ -138,14 +137,6 @@ class ProductDetatil : Fragment(), View.OnClickListener {
         return view
     }
 
-    private fun BackPress(boolean: Boolean){
-        val callback = object : OnBackPressedCallback(boolean) {
-            override fun handleOnBackPressed() {
-                Toast.makeText(context, "Please wait ...", Toast.LENGTH_LONG).show()
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(callback)
-    }
 
     private fun declare() {
         if (currentuser != null) {
@@ -167,8 +158,6 @@ class ProductDetatil : Fragment(), View.OnClickListener {
         }
     }
     fun BuyOnClick() {
-        backpress=true
-        BackPress(backpress)
         RemoveFromCart(MovieName.text.toString())
         AddToPurchase(MovieName.text.toString())
     }
@@ -231,20 +220,22 @@ class ProductDetatil : Fragment(), View.OnClickListener {
             "MovieName" to MovieName.text.toString(),
             "Price" to money
         )
-        if (currentuser != null) {
-            db.collection(currentuser.uid)
-                .document("Purchase").collection("list").document(dockname)
-                .set(download)
-            db.collection("Orders").document(currentuser.uid + MovieName.text.toString())
-                .set(orderdetails)
-                .addOnSuccessListener {
-                    Toast.makeText(context, "Purchased Successfull", Toast.LENGTH_SHORT)
-                        .show()
-                    secondaryVisible()
-                    backpress=false
-                   BackPress(backpress)
-                }
+        try {
+            if (currentuser != null) {
+                db.collection(currentuser.uid)
+                    .document("Purchase").collection("list").document(dockname)
+                    .set(download)
+                db.collection("Orders").document(currentuser.uid + MovieName.text.toString())
+                    .set(orderdetails)
+                    ?.addOnSuccessListener {
+                        Toast.makeText(context, "Purchased Successfull", Toast.LENGTH_SHORT)
+                            .show()
+                        secondaryVisible()
+                    }
+            }
+        }catch (e : Exception){
         }
+
     }
 
 

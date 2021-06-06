@@ -25,10 +25,10 @@
         android:id="@+id/linearlayout_Search"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:minHeight="100dp"
         android:foregroundGravity="center"
         android:gravity="center_vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent=".09"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SearchFragmentToolbar">
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -44,9 +44,10 @@
                 android:layout_height="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:padding="5dp"
+                app:queryHint="Search here!!"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHeight_percent=".8"
+                app:layout_constraintHeight_percent=".7"
                 app:layout_constraintWidth_default="percent"
                 app:layout_constraintWidth_percent=".8" />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -58,10 +59,10 @@
         android:id="@+id/SearchFragmentRecylerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:padding="5dp"
+        android:padding="15dp"
         android:paddingBottom="70dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent=".83"
+        app:layout_constraintHeight_percent="1"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearlayout_Search"
