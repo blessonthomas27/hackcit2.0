@@ -12,6 +12,7 @@ class TrendingViewModel : ViewModel() {
     var obj = mutableListOf<YoutbeData>()
     var live_obj = MutableLiveData<List<YoutbeData>>()
 
+
     init {
         firestore = FirebaseFirestore.getInstance()
         LiveExecute()
@@ -29,6 +30,5 @@ class TrendingViewModel : ViewModel() {
                     live_obj.value = obj
                 }
             }
-
     }
 }

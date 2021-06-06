@@ -43,6 +43,7 @@ class ProductDetatil : Fragment(), View.OnClickListener {
         .dontAnimate()
         .dontTransform()
     var db = FirebaseFirestore.getInstance()
+    var isDownloded=false
     val mAuth = FirebaseAuth.getInstance()
     val currentuser = mAuth.currentUser
     lateinit var ImageBanner: ImageView
@@ -129,18 +130,13 @@ class ProductDetatil : Fragment(), View.OnClickListener {
         }
         val toolbar: Toolbar = view.findViewById(R.id.ProducDetailFragmentToolbar)
         toolbar.inflateMenu(R.menu.trendingmenu)
-
-        declare()
-
-
-
         return view
     }
 
 
     private fun declare() {
         if (currentuser != null) {
-            db.collection(currentuser.uid.toString())
+            db.collection(currentuser.uid)
                 .document("Purchase").collection("list").document(MovieName.text.toString())
                 .get().addOnCompleteListener {
                     if (it.isSuccessful) {
@@ -153,6 +149,17 @@ class ProductDetatil : Fragment(), View.OnClickListener {
                         }
                     } else {
                         primaryVisible()
+                    }
+                }
+            db.collection(currentuser.uid)
+                .document(MovieName.text.toString())
+                .get().addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        val doc: DocumentSnapshot? = it.result
+                        if (doc != null && doc.exists()) {
+                            isDownloded=true
+                            return@addOnCompleteListener
+                        }
                     }
                 }
         }
@@ -221,21 +228,16 @@ class ProductDetatil : Fragment(), View.OnClickListener {
             "Price" to money
         )
         try {
-            if (currentuser != null) {
-                db.collection(currentuser.uid)
-                    .document("Purchase").collection("list").document(dockname)
-                    .set(download)
-                db.collection("Orders").document(currentuser.uid + MovieName.text.toString())
-                    .set(orderdetails)
-                    ?.addOnSuccessListener {
-                        Toast.makeText(context, "Purchased Successfull", Toast.LENGTH_SHORT)
-                            .show()
-                        secondaryVisible()
-                    }
-            }
-        }catch (e : Exception){
-        }
 
+        }catch (e : Exception){}
+        if (currentuser != null) {
+            db.collection(currentuser.uid)
+                .document("Purchase").collection("list").document(dockname)
+                .set(download)
+            db.collection("Orders").document(currentuser.uid + MovieName.text.toString())
+                .set(orderdetails)
+                onStart()
+        }
     }
 
 
@@ -280,11 +282,24 @@ class ProductDetatil : Fragment(), View.OnClickListener {
                 requestPermissions(arrayOf(permisidon), permisioncode);
             } else {
                 startdownloding()
+                setDownload()
             }
         } else {
             startdownloding()
+            setDownload()
         }
 
+    }
+    fun setDownload(){
+        val user = hashMapOf(
+            "isDownloded" to true
+        )
+        if (currentuser != null) {
+            db.collection(currentuser.uid)
+                .document(MovieName.text.toString())
+                .set(user)
+            onStart()
+        }
     }
 
     private fun startdownloding() {
@@ -327,9 +342,20 @@ class ProductDetatil : Fragment(), View.OnClickListener {
                     .show()
             }
             StreamNow -> StreamOnClick()
-            Download -> DownloadOnClick()
-
+            Download -> if(isDownloded!=true){
+                DownloadOnClick()
+            }else{
+                Toast.makeText(
+                    context,
+                    "Alredy Downloded" ,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        declare()
+    }
 }

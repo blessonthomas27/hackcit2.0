@@ -51,7 +51,7 @@ class Search_Fragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        TODO()
+        return true
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
