@@ -69,7 +69,6 @@ class TrendingFragment : Fragment(), YoutbeRecyler.OnCustomclickListener {
     }
 
     override fun onItemclick(category: List<YoutbeData>, position: Int) {
-        Toast.makeText(context, "clicked", Toast.LENGTH_LONG).show()
         val indent = Intent(context, YoutbeActivity::class.java)
         indent.putExtra("data", category[position].VideoId)
         startActivity(indent)

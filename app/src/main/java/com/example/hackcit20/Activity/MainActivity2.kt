@@ -1,15 +1,18 @@
 package com.example.hackcit20.Activity
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.hackcit20.R
+import com.example.hackcit20.ui.ProductDetail.ProductDetatil
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.razorpay.PaymentResultListener
 
 
-class MainActivity2 : AppCompatActivity()  {
+class MainActivity2 : AppCompatActivity(), PaymentResultListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,7 +22,16 @@ class MainActivity2 : AppCompatActivity()  {
 
         val navController = findNavController(R.id.nav_host_fragment)
         navView.setupWithNavController(navController)
+    }
 
+
+
+    override fun onPaymentSuccess(p0: String?) {
+        Toast.makeText(this," payment success"+ p0, Toast.LENGTH_LONG).show()
+    }
+
+    override fun onPaymentError(p0: Int, p1: String?) {
+        Toast.makeText(this,"ACTYIVITY Error !! "+p1, Toast.LENGTH_LONG).show()
     }
 
 }

@@ -16,8 +16,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.OnBackPressedDispatcher
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -27,12 +25,15 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.example.hackcit20.Activity.StreamingActivity
 import com.example.hackcit20.R
+import com.example.hackcit20.dataclass.Api_key
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.razorpay.Checkout
+import org.json.JSONObject
 
 
-class ProductDetatil : Fragment(), View.OnClickListener {
+class ProductDetatil : Fragment(), View.OnClickListener{
 
     val options: RequestOptions = RequestOptions()
         .centerCrop()
@@ -43,7 +44,7 @@ class ProductDetatil : Fragment(), View.OnClickListener {
         .dontAnimate()
         .dontTransform()
     var db = FirebaseFirestore.getInstance()
-    var isDownloded=false
+    var isDownloded = false
     val mAuth = FirebaseAuth.getInstance()
     val currentuser = mAuth.currentUser
     lateinit var ImageBanner: ImageView
@@ -60,9 +61,13 @@ class ProductDetatil : Fragment(), View.OnClickListener {
     lateinit var money: String
     lateinit var StreamNow: Button
     lateinit var Download: Button
+    var key: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        Checkout.preload(context)
+
 
     }
 
@@ -101,7 +106,7 @@ class ProductDetatil : Fragment(), View.OnClickListener {
             if (a != null) {
                 money = a
             }
-            Price.text = "₹$a/- Buy"
+            Price.text = "₹$a./- Buy"
         }
         arguments?.getString("grade").let { a ->
             grade.text = a
@@ -157,13 +162,21 @@ class ProductDetatil : Fragment(), View.OnClickListener {
                     if (it.isSuccessful) {
                         val doc: DocumentSnapshot? = it.result
                         if (doc != null && doc.exists()) {
-                            isDownloded=true
+                            isDownloded = true
                             return@addOnCompleteListener
                         }
                     }
                 }
+            db.collection("API_KEY").document("Key")
+                .get().addOnSuccessListener { document ->
+                    val temp: Api_key? = document.toObject(Api_key::class.java)
+                    if (temp != null) {
+                        key = temp.RAZORPAY_API_KEY
+                    }
+                }
         }
     }
+
     fun BuyOnClick() {
         RemoveFromCart(MovieName.text.toString())
         AddToPurchase(MovieName.text.toString())
@@ -227,16 +240,13 @@ class ProductDetatil : Fragment(), View.OnClickListener {
             "MovieName" to MovieName.text.toString(),
             "Price" to money
         )
-        try {
-
-        }catch (e : Exception){}
         if (currentuser != null) {
             db.collection(currentuser.uid)
                 .document("Purchase").collection("list").document(dockname)
                 .set(download)
             db.collection("Orders").document(currentuser.uid + MovieName.text.toString())
                 .set(orderdetails)
-                onStart()
+            onStart()
         }
     }
 
@@ -248,10 +258,16 @@ class ProductDetatil : Fragment(), View.OnClickListener {
             setTitle("Payment (TEST MODE!)")
             setMessage("Proceed to pay ")
             setPositiveButton(
-                "" + Price.text,
-                { dialogInterface: DialogInterface, i: Int ->
-                    BuyOnClick()
-                })
+                "" + Price.text
+            ) { dialogInterface: DialogInterface, i: Int ->
+                // BuyOnClick()
+                if (key != "") {
+                    startPayment()
+                } else {
+                    onStart()
+                }
+
+            }
             setNegativeButton("cancel", { dialogInterface: DialogInterface, i: Int -> })
             show()
         }
@@ -290,7 +306,8 @@ class ProductDetatil : Fragment(), View.OnClickListener {
         }
 
     }
-    fun setDownload(){
+
+    fun setDownload() {
         val user = hashMapOf(
             "isDownloded" to true
         )
@@ -325,32 +342,54 @@ class ProductDetatil : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View) {
         when (v) {
-            Price ->
-                if (Price.text != "Buy") {
-                    PriceOnClick()
-                } else {
-                    Toast.makeText(
-                        context,
-                        "Somthing Went Wrong!!" + Price.text,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            Cart -> if (Price.text != "Buy") {
-                CartOnClick()
-            } else {
-                Toast.makeText(context, "Somthing Went Wrong!!" + Price.text, Toast.LENGTH_SHORT)
-                    .show()
-            }
+            Price ->PriceOnClick()
+            Cart -> CartOnClick()
             StreamNow -> StreamOnClick()
-            Download -> if(isDownloded!=true){
+            Download -> if (isDownloded != true) {
                 DownloadOnClick()
-            }else{
+            } else {
                 Toast.makeText(
                     context,
-                    "Alredy Downloded" ,
+                    "Alredy Downloded",
                     Toast.LENGTH_SHORT
                 ).show()
             }
+        }
+    }
+
+    private fun startPayment() {
+        /*
+        *  You need to pass current activity in order to let Razorpay create CheckoutActivity
+        * */
+        val co = Checkout()
+        val image: Int = R.mipmap.ic_launcher1 // Can be any drawable
+        co.setImage(image)
+        co.setKeyID("$key");
+
+        try {
+            val options = JSONObject()
+            options.put("name", MovieName.text)
+            options.put("description", "Demoing Charges")
+            //You can omit the image option to fetch the image from dashboard
+            options.put("theme.color", "#3399cc");
+            options.put("currency", "INR");
+            options.put("amount", money.toInt()*100)//pass amount in currency subunits
+
+            val retryObj = JSONObject();
+            retryObj.put("enabled", true);
+            retryObj.put("max_count", 4);
+            options.put("retry", retryObj);
+
+            val prefill = JSONObject()
+            prefill.put("email", currentuser?.email)
+            prefill.put("contact", currentuser?.phoneNumber)
+
+            options.put("prefill", prefill)
+            co.open(requireActivity(), options)
+        } catch (e: Exception) {
+            Toast.makeText(requireActivity(), "Error in payment: " + e.message, Toast.LENGTH_LONG)
+                .show()
+            e.printStackTrace()
         }
     }
 

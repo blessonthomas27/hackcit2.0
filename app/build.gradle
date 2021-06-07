@@ -98,5 +98,7 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-dash:2.12.1'
     implementation 'com.google.android.exoplayer:exoplayer-ui:2.12.1'
     implementation 'com.google.android.exoplayer:exoplayer-hls:2.12.1'
+    //razorpay
+    implementation 'com.razorpay:checkout:1.6.6'
 
 }
