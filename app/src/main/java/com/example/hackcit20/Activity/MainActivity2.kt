@@ -27,11 +27,10 @@ class MainActivity2 : AppCompatActivity(), PaymentResultListener {
 
 
     override fun onPaymentSuccess(p0: String?) {
-        Toast.makeText(this," payment success"+ p0, Toast.LENGTH_LONG).show()
+        Toast.makeText(this,"Payment Success", Toast.LENGTH_LONG).show()
     }
 
     override fun onPaymentError(p0: Int, p1: String?) {
-        Toast.makeText(this,"ACTYIVITY Error !! "+p1, Toast.LENGTH_LONG).show()
     }
 
 }

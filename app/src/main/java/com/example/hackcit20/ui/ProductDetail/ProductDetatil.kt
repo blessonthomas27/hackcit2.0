@@ -263,6 +263,7 @@ class ProductDetatil : Fragment(), View.OnClickListener{
                 // BuyOnClick()
                 if (key != "") {
                     startPayment()
+                    BuyOnClick()
                 } else {
                     onStart()
                 }

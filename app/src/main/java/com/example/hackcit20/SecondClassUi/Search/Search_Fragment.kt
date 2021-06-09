@@ -66,11 +66,8 @@ class Search_Fragment : Fragment(), SearchView.OnQueryTextListener {
                     for (document in it.result!!) {
                         val temp: ProductDetail = document.toObject(ProductDetail::class.java)
                         list.add(i++, temp)
-                        Toast.makeText(context, "aqsdfghjszdfgh   $i $newText", Toast.LENGTH_LONG)
-                            .show()
                         adapter.notifyDataSetChanged()
                     }
-                    Toast.makeText(context, "$list", Toast.LENGTH_LONG).show()
                 } else if (it.isCanceled) {
                     Toast.makeText(context, "Failed", Toast.LENGTH_LONG).show()
                 }
