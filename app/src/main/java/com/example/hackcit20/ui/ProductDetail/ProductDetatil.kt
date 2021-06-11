@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.example.hackcit20.Activity.MainActivity2
 import com.example.hackcit20.Activity.StreamingActivity
 import com.example.hackcit20.R
 import com.example.hackcit20.dataclass.Api_key
@@ -61,7 +62,9 @@ class ProductDetatil : Fragment(), View.OnClickListener{
     lateinit var money: String
     lateinit var StreamNow: Button
     lateinit var Download: Button
-    var key: String = ""
+    var key: String? = null
+    var apikey:Api_key? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -167,13 +170,18 @@ class ProductDetatil : Fragment(), View.OnClickListener{
                         }
                     }
                 }
-            db.collection("API_KEY").document("Key")
-                .get().addOnSuccessListener { document ->
-                    val temp: Api_key? = document.toObject(Api_key::class.java)
-                    if (temp != null) {
-                        key = temp.RAZORPAY_API_KEY
+            apikey = (activity as MainActivity2?)?.passKey()
+            if (apikey==null){
+                db.collection("API_KEY").document("Key")
+                    .get().addOnSuccessListener { document ->
+                        val temp: Api_key? = document.toObject(Api_key::class.java)
+                        if (temp != null) {
+                            key = temp.RAZORPAY_API_KEY
+                        }
                     }
-                }
+            }else{
+                key= apikey!!.RAZORPAY_API_KEY
+            }
         }
     }
 

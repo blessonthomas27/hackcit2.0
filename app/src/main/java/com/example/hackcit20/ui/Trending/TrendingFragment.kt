@@ -10,13 +10,14 @@ import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.hackcit20.Activity.MainActivity2
+import com.example.hackcit20.Activity.YoutbeActivity
 import com.example.hackcit20.Adapter.YoutbeRecyler
 import com.example.hackcit20.R
-import com.example.hackcit20.Activity.YoutbeActivity
+import com.example.hackcit20.dataclass.Api_key
 import com.example.hackcit20.dataclass.YoutbeData
 
 class TrendingFragment : Fragment(), YoutbeRecyler.OnCustomclickListener {
@@ -26,6 +27,7 @@ class TrendingFragment : Fragment(), YoutbeRecyler.OnCustomclickListener {
 
     lateinit var viewModel: TrendingViewModel
     lateinit var pd:ProgressBar
+    var apikey:Api_key? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +55,7 @@ class TrendingFragment : Fragment(), YoutbeRecyler.OnCustomclickListener {
         }
 
         pd.visibility=View.VISIBLE
-
+        apikey = (activity as MainActivity2?)?.passKey()
 
         return view
     }
@@ -69,9 +71,14 @@ class TrendingFragment : Fragment(), YoutbeRecyler.OnCustomclickListener {
     }
 
     override fun onItemclick(category: List<YoutbeData>, position: Int) {
-        val indent = Intent(context, YoutbeActivity::class.java)
-        indent.putExtra("data", category[position].VideoId)
-        startActivity(indent)
+        if (apikey!=null) {
+            val indent = Intent(context, YoutbeActivity::class.java)
+            indent.putExtra("data", category[position].VideoId)
+            indent.putExtra("key", apikey!!.YOUTUBE_API_KEY)
+            startActivity(indent)
+        }else{
+            Toast.makeText(context,"Error Connecting !!",Toast.LENGTH_SHORT).show()
+        }
     }
 
 

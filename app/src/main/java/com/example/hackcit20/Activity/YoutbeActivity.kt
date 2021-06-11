@@ -10,7 +10,7 @@ import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerView
 
 class YoutbeActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener {
-    val key:String="AIzaSyDX9E43hGmQTi6fl0DM5aTzTCq87N0492g"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,7 +18,7 @@ class YoutbeActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListene
 
         val youTubeView=findViewById<YouTubePlayerView>(R.id.youtubeplayer)
 
-        youTubeView.initialize(key, this);
+        youTubeView.initialize(intent.getStringExtra("key"), this);
     }
 
     override fun onInitializationSuccess(
@@ -27,7 +27,6 @@ class YoutbeActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListene
         sucess: Boolean
     ) {
         if (!sucess) {
-
             player?.loadVideo(intent.getStringExtra("data"));
         }
     }
