@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.hackcit20.R
@@ -48,7 +49,6 @@ class MainActivity2 : AppCompatActivity(), PaymentResultListener {
                 }
             }
     }
-
     fun passKey(): Api_key? {
         if(Ykey!=""&&Rkey!==""){
             return Api_key(Ykey,Rkey)
@@ -63,6 +63,7 @@ class MainActivity2 : AppCompatActivity(), PaymentResultListener {
     }
 
     override fun onPaymentError(p0: Int, p1: String?) {
+        Toast.makeText(this, "Payment Failed!", Toast.LENGTH_LONG).show()
     }
 
 }

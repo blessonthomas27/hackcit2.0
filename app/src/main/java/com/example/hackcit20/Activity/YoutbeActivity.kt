@@ -28,6 +28,8 @@ class YoutbeActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListene
     ) {
         if (!sucess) {
             player?.loadVideo(intent.getStringExtra("data"));
+        }else{
+            onBackPressed()
         }
     }
 
@@ -35,6 +37,6 @@ class YoutbeActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListene
         provider: YouTubePlayer.Provider?,
         errorResulr: YouTubeInitializationResult?
     ) {
-        TODO("Not yet implemented")
+        onBackPressed()
     }
 }
