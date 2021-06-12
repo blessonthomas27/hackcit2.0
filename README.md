@@ -24,6 +24,37 @@ Age:19
 
 Mail-id:blessonthomas27@gmail.com
 
+Home Fragment
+![](Home%20Fragment.jpeg)
+
+
+Trending Fragment
+![](Trending%20Fragment.jpeg)
+
+
+Search Fragment
+![](Search%20Fragment.jpeg)
+
+
+Profile Fragment
+![](Profile%20Fragment.jpeg)
+
+
+Product Detail Fragment
+![](Product%20Detail%20fragment.jpeg)
+
+
+Payment Gateway
+![](Payment%20Gateway.jpeg)
+
+
+Exoplayer View
+![](Exo%20pLayer%20View.jpeg)
+
+
+Youtubeplayer view
+![](Youtube%20Player%20View.jpeg)
+
 
 
 
